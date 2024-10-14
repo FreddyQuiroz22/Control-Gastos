@@ -1,37 +1,147 @@
 import React from "react";
-// import {doc, getDoc} from "firebase/firestore";
+// import { doc, getDoc, updateDoc } from "firebase/firestore";
 // import { db, auth } from "../firebase"; // Importa la configuración de Firebase
+import DataTable from 'react-data-table-component';
+import { TrashIcon } from '@heroicons/react/24/outline'; // Para outline
+
+function ListaGastos({ gastos, eliminarGasto, filtroCategoria, setFiltroCategoria }) {
+  // const [Presupuesto, setPresupuesto] = useState(0);
+  // const [editingPresupuesto, setEditingPresupuesto] = useState(false); // Nuevo estado para editar presupuesto
+
+  const columns = [
+    {
+      name: 'Nombre',
+      selector: row => row.nombre,
+      sortable: true,
+    },
+    {
+      name: 'Monto',
+      selector: row => row.monto,
+      sortable: true,
+    },
+    {
+      name: 'Categoría',
+      selector: row => row.categoria,
+      sortable: true,
+    },
+    {
+      name: 'Acciones',
+      cell: row => (
+        <button 
+          onClick={() => eliminarGasto(row)} 
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          
+        >
+          <TrashIcon className="h-6 w-6" aria-hidden="true" />
+        </button>
+      ),
+    },
+  ];
+
+  //Datos para datatable
+
+  const data = gastos.map((gasto)=>({
+    nombre: gasto.nombre,
+    monto: gasto.monto,
+    categoria: gasto.categoria,
+    id: gasto.id,
+  }));
+
+   // Manejar evento de eliminación de un gasto
+  //  useEffect(() => {
+  //   const table = document.querySelector('.dataTable');
+  //   table.addEventListener('click', (e) => {
+  //     if (e.target.classList.contains('btn-delete')) {
+  //       const id = e.target.getAttribute('data-id');
+  //       const gasto = gastos.find((g) => g.id === id);
+  //       if (gasto) {
+  //         eliminarGasto(gasto); // Llamada a la función eliminarGasto de App.js
+  //       }
+  //     }
+  //   });
+  // }, [gastos]);
 
 
-
-function ListaGastos({ gastos, eliminarGasto, filtroCategoria, setFiltroCategoria, presupuesto }) {
-
-  // const [presupuesto, setPresupuesto] = useState(0);
   // useEffect(() => {
   //   const fetchPresupuesto = async () => {
   //     if (auth.currentUser) {
-  //       const userDoc = doc(db, 'usuarios', auth.currentUser.uid);
+  //       const userDoc = doc(db, 'presupuestos', auth.currentUser.uid); // Cambiado a 'users'
+  //       console.log("UID del usuario:", auth.currentUser.uid); // Asegúrate de que este ID es correcto
   //       const docSnap = await getDoc(userDoc);
   //       if (docSnap.exists()) {
-  //         setPresupuesto(docSnap.data().presupuesto || 0);
+  //         setPresupuesto(docSnap.data().presupuestoInicial || 0); // Cambiado a 'presupuestoinicial'
+  //       } else {
+  //         console.log("Documento de usuario no encontrado.");
   //       }
   //     }
   //   };
   //   fetchPresupuesto();
   // }, []);
 
-  const totalGastos = gastos.reduce((acc, gasto) => acc + gasto.monto, 0);
+  // const totalGastos = gastos.reduce((acc, gasto) => acc + gasto.monto, 0);
+
+  // const handlePresupuestoUpdate = async () => {
+  //   try {
+  //     const userDocRef = doc(db, 'presupuestos', auth.currentUser.uid); // Cambiado a 'users'
+  //     const docSnap = await getDoc(userDocRef);
+      
+  //     if (docSnap.exists()) {
+  //       await updateDoc(userDocRef, { presupuestoInicial: Presupuesto }); // Cambiado a 'presupuestoinicial'
+  //       setEditingPresupuesto(false);
+  //     } else {
+  //       console.error("No se encontró el documento para actualizar.");
+  //     }
+  //   } catch (error) {
+  //     console.error('Error al actualizar el presupuesto:', error);
+  //   }
+  // };
+
 
   return (
-    <div>
-      <h1 className='text-center mb-4 border-b pb-4 text-5xl leading-tight'>Lista de Gastos</h1>
-      {/* Mostrar presupuesto, total gastado y saldo disponible */}
-      <div className="mb-4">
-        <h3>Presupuesto Inicial: ${presupuesto}</h3>
-        <h3>Total Gastado: ${totalGastos}</h3>
-        <h3>Saldo Disponible: ${presupuesto - totalGastos}</h3>
-      </div>
-      <div>
+    <div className="p-4">
+      
+      {/* <div className="flex space-x-4 mb-4">
+        <div className="bg-white shadow-md rounded-lg p-4 w-1/3">
+          <h3 className="text-lg font-semibold">Presupuesto Inicial</h3>
+          {editingPresupuesto ? (
+            <div>
+              <input
+                type="number"
+                value={Presupuesto}
+                onChange={(e) => setPresupuesto(Number(e.target.value))}
+                className="border p-2 rounded-md"
+              />
+              <button
+                className="bg-green-500 text-white px-3 py-2 rounded-md mt-2"
+                onClick={handlePresupuestoUpdate}
+              >
+                Guardar
+              </button>
+            </div>
+          ) : (
+            <>
+              <p className="text-2xl">${Presupuesto}</p>
+              <button
+                className="mt-2 text-blue-500"
+                onClick={() => setEditingPresupuesto(true)}
+              >
+                Editar
+              </button>
+            </>
+          )}
+        </div>
+
+        <div className="bg-white shadow-md rounded-lg p-4 w-1/3">
+          <h3 className="text-lg font-semibold">Total Gastado</h3>
+          <p className="text-2xl">${totalGastos}</p>
+        </div>
+
+        <div className="bg-white shadow-md rounded-lg p-4 w-1/3">
+          <h3 className="text-lg font-semibold">Saldo Disponible</h3>
+          <p className="text-2xl">${Presupuesto - totalGastos}</p>
+        </div>
+      </div> */}
+      {/* <div>
         <label>Filtrar por Categoría:</label>
         <select
           value={filtroCategoria}
@@ -43,44 +153,24 @@ function ListaGastos({ gastos, eliminarGasto, filtroCategoria, setFiltroCategori
           <option value="Entretenimiento">Entretenimiento</option>
           <option value="Otros">Otros</option>
         </select>
-      </div>
+      </div> */}
       {gastos.length === 0 ? (
         <p>No hay gastos en esta categoría.</p>
       ) : (
-        <div className="flex flex-col">
-          <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-              <div className="overflow-hidden"></div>
-              <table className="min-w-full text-left text-sm font-light">
-                <thead className="border-b font-medium dark:border-neutral-500">
-                  <tr>
-                    <th scope="col" className="px-6 py-4">Nombre</th>
-                    <th scope="col" className="px-6 py-4">Monto</th>
-                    <th scope="col" className="px-6 py-4">Categoría</th>
-                    <th scope="col" className="px-6 py-4">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {gastos.map((gasto) => (
-                    <tr key={gasto.id} className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600">
-                      <td className=' whitespace-nowrap px-6 py-4'>{gasto.nombre}</td>
-                      <td className='whitespace-nowrap px-6 py-4'>{gasto.monto}</td>
-                      <td className='whitespace-nowrap px-6 py-4'>{gasto.categoria}</td>
-                      <td className='whitespace-nowrap px-6 py-4'>
-                        <button
-                          type="button"
-                          onClick={() => eliminarGasto(gasto)}
-                          className="inline-block rounded bg-danger px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-                          Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+        <div className="p-6 bg-white shadow-md rounded-lg">
+      <DataTable
+        columns={columns}
+        data={data}
+        pagination
+        highlightOnHover
+        className="min-w-full text-sm"
+        noHeader={false}
+        paginationComponentOptions={{
+          rowsPerPageText: 'Filas por página',
+          rangeSeparatorText: 'de',
+        }}
+      />
+    </div>
       )}
     </div>
   );

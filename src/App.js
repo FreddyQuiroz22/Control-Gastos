@@ -10,6 +10,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import PresupuestoConfig from './components/PresupuestoConfig';
 import WelcomeModal from './components/WelcomeModal'; // Asegúrate de importar el modal
+import Widgets from './components/Widgets';
 
 function App() {
   const [gastos, setGastos] = useState([]);
@@ -106,7 +107,8 @@ function App() {
                     onClose={() => setShowWelcomeModal(false)} // Función para cerrar el modal
                     onSubmit={handlePresupuestoSubmit} // Función para guardar el presupuesto
                   />
-                  )}  
+                  )}
+                  <Widgets gastos={gastosFiltrados}/>  
                   <AgregarGasto agregarGasto={agregarGastoFirestore} />
                   <ListaGastos
                     gastos={gastosFiltrados}

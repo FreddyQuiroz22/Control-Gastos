@@ -28,44 +28,64 @@ function AgregarGasto({agregarGasto}) {
     e.preventDefault();
     const nuevoGasto = { nombre, categoria, monto: parseFloat(monto) };
     agregarGasto(nuevoGasto); // Llama a la función para guardar el gasto en Firestore
+
+     // Limpiar los campos del formulario
+     setNombre('');
+     setMonto('');
+     setCategoria('');
   };  
 
 
 
   return (
-    <div className="max-w-3xl mx-auto p-4 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Agregar Nuevo Gasto</h2>
-      <form onSubmit={manejarSubmit} className="flex flex-col space-y-4">
-        <div className="flex flex-wrap gap-4">
-          <div className="flex-1">
-            <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">Nombre del Gasto:</label>
+<div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="px-6 py-4">
+        <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">Agregar Gasto</h2>
+        <form onSubmit={manejarSubmit}>
+
+          {/* Input para nombre */}
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nombre">
+              Nombre del Gasto
+            </label>
             <input
               id="nombre"
               type="text"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
+              placeholder="Ej. Compra de alimentos"
+              className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
-          <div className="flex-1">
-            <label htmlFor="monto" className="block text-sm font-medium text-gray-700">Monto:</label>
+
+          {/* Input para monto */}
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="monto">
+              Monto
+            </label>
             <input
               id="monto"
               type="number"
               value={monto}
               onChange={(e) => setMonto(e.target.value)}
+              placeholder="Ej. 50"
+              className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
-          <div className="flex-1">
-            <label htmlFor="categoria" className="block text-sm font-medium text-gray-700">Categoría:</label>
+
+          {/* Select para categoría */}
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="categoria">
+              Categoría
+            </label>
             <select
               id="categoria"
               value={categoria}
               onChange={(e) => setCategoria(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             >
               <option value="Comida">Comida</option>
               <option value="Transporte">Transporte</option>
@@ -73,15 +93,19 @@ function AgregarGasto({agregarGasto}) {
               <option value="Otros">Otros</option>
             </select>
           </div>
-          <div className='flex-1 p-5'>
+
+          {/* Botón para agregar gasto */}
+          <div className="text-center">
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               Agregar Gasto
             </button>
           </div>
-        </div>
-      </form>
+
+        </form>
+      </div>
     </div>
   );
 }

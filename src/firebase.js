@@ -20,3 +20,22 @@ const db = getFirestore(app); // Inicializa Firestore
 const auth = getAuth(app); // Inicializa Firebase Authentication
 
 export { db, auth }; // Exporta Firestore y Authentication
+
+
+
+
+// rules_version = '2';
+// service cloud.firestore {
+//   match /databases/{database}/documents {
+
+//     // Permitir solo a usuarios autenticados leer y escribir sus propios documentos
+//     match /usuarios/{userId} {
+//       allow read, write: if request.auth != null && request.auth.uid == userId;
+//     }
+
+//     // Permitir que todos los usuarios autenticados lean y escriban en la colección "gastos"
+//     match /gastos/{documentId} {
+//       allow read, write: if request.auth != null;
+//     }
+//   }
+// }
