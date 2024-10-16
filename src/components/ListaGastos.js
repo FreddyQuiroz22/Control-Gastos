@@ -30,8 +30,7 @@ function ListaGastos({ gastos, eliminarGasto, filtroCategoria, setFiltroCategori
         <button 
           onClick={() => eliminarGasto(row)} 
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-          
-        >
+          >
           <TrashIcon className="h-6 w-6" aria-hidden="true" />
         </button>
       ),

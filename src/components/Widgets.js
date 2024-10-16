@@ -41,14 +41,17 @@ function Widgets ({gastos =[]}){
             }
         };
         
-    const totalGastos = gastos.reduce((acc, gasto) => acc + gasto.monto, 0);
+    const totalGastos = gastos.reduce((acc, gasto) => acc + gasto.monto, 0).toFixed(2);
+
+    const saldoDisponible = parseFloat((Presupuesto-totalGastos).toFixed(2));
+
       
 
 return(
 
-    <div className="flex space-x-4 mb-4">
-    <div className="bg-white shadow-md rounded-lg p-4 w-1/3">
-      <h3 className="text-lg font-semibold">Presupuesto Inicial</h3>
+    <div className="flex space-x-4 mb-3">
+    <div className="bg-white shadow-md rounded-lg p-4 w-[22.33%] ml-[13%]">
+      <h3 className="text-base md:text-lg font-semibold text-center break-words">Presupuesto Inicial</h3>
       {editingPresupuesto ? (
         <div>
           <input
@@ -66,7 +69,7 @@ return(
         </div>
       ) : (
         <>
-          <p className="text-2xl">${Presupuesto}</p>
+          <p className="text-2xl text-center">${Presupuesto}</p>
           <button
             className="mt-2 text-blue-500"
             onClick={() => setEditingPresupuesto(true)}
@@ -78,15 +81,19 @@ return(
     </div>
 
     {/* Tarjeta de Total Gastado */}
-    <div className="bg-white shadow-md rounded-lg p-4 w-1/3">
-      <h3 className="text-lg font-semibold">Total Gastado</h3>
-      <p className="text-2xl">${totalGastos}</p>
+    <div className="bg-white shadow-md rounded-lg p-4 w-[25%] ml-[13%]">
+      <h3 className="text-base md:text-lg font-semibold text-center break-words">Total Gastado</h3>
+      <p className="text-2xl text-center">${totalGastos}</p>
     </div>
 
     {/* Tarjeta de Saldo Disponible */}
-    <div className="bg-white shadow-md rounded-lg p-4 w-1/3">
-      <h3 className="text-lg font-semibold">Saldo Disponible</h3>
-      <p className="text-2xl">${Presupuesto - totalGastos}</p>
+    <div
+      className={`shadow-md rounded-lg p-4 w-[22.33%] ml-[13%] ${
+        saldoDisponible < 0 ? 'bg-red-500' : 'bg-white'
+      }`}
+    >
+      <h3 className="text-base md:text-lg font-semibold text-center break-words">Saldo Disponible</h3>
+      <p className="text-2xl text-center">${saldoDisponible}</p>
     </div>
     </div>
 

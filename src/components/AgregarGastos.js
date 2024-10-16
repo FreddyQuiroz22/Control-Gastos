@@ -38,7 +38,7 @@ function AgregarGasto({agregarGasto}) {
 
 
   return (
-<div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+  <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="px-6 py-4">
         <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">Agregar Gasto</h2>
         <form onSubmit={manejarSubmit}>

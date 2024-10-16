@@ -109,14 +109,20 @@ function App() {
                   />
                   )}
                   <Widgets gastos={gastosFiltrados}/>  
-                  <AgregarGasto agregarGasto={agregarGastoFirestore} />
-                  <ListaGastos
-                    gastos={gastosFiltrados}
-                    eliminarGasto={eliminarGasto}
-                    filtroCategoria={filtroCategoria}
-                    setFiltroCategoria={setFiltroCategoria}
-                    presupuesto={presupuestoInicial}
-                  />
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2 p-4">
+                    <div className="bg-white p-4">
+                      <AgregarGasto agregarGasto={agregarGastoFirestore} />
+                    </div>
+                    <div className="overflow-y-auto h-96">
+                      <ListaGastos
+                        gastos={gastosFiltrados}
+                        eliminarGasto={eliminarGasto}
+                        filtroCategoria={filtroCategoria}
+                        setFiltroCategoria={setFiltroCategoria}
+                        presupuesto={presupuestoInicial}
+                      />
+                    </div>
+                  </div>
                 </>
               }
             />
